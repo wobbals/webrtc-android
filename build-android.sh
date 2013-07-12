@@ -6,7 +6,6 @@ echo "target_os = ['android', 'unix']" >> .gclient
 gclient sync --nohooks
 
 cd trunk/build/android
-. ./envsetup_functions.sh
 . ./envsetup.sh
 cd ../..
 gclient runhooks
