@@ -1,6 +1,6 @@
 <project name="Sample">
   <target name="test">
-    <exec executable="/bin/bash">
+    <exec executable="/bin/bash" failonerror="true">
       <arg value="build-android.sh"/>
     </exec>
   </target>
