@@ -1,0 +1,7 @@
+<project name="Sample">
+  <target name="test">
+    <exec executable="/bin/bash">
+      <arg value="build-android.sh"/>
+    </exec>
+  </target>
+</project>
