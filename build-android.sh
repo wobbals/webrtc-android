@@ -1,4 +1,6 @@
 #!/bin/sh
+set -x
+
 gclient config https://webrtc.googlecode.com/svn/trunk
 echo "target_os = ['android', 'unix']" >> .gclient
 gclient sync --nohooks
