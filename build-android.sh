@@ -1,5 +1,6 @@
 #!/bin/sh
 set -x
+export PATH=`pwd`/depot_tools
 
 gclient config https://webrtc.googlecode.com/svn/trunk
 echo "target_os = ['android', 'unix']" >> .gclient
