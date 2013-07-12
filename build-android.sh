@@ -1,13 +1,11 @@
 #!/bin/sh -xe
 export PATH=$PATH:`pwd`/depot_tools
 
-gclient config https://webrtc.googlecode.com/svn/trunk
-echo "target_os = ['android', 'unix']" >> .gclient
+BRANCH=trunk
 gclient sync --nohooks
 
-cd trunk/build/android
-. `pwd`/envsetup.sh
-cd ../..
+cd $BRANCH
+. ./build/android/envsetup.sh
 gclient runhooks
 #ninja -C out/Debug -t targets
 ninja -C out/Debug video_demo_apk
