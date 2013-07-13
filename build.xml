@@ -1,5 +1,5 @@
-<project name="Sample">
-  <target name="test">
+<project name="webrtc-android">
+  <target name="build">
     <exec executable="/bin/bash" failonerror="true">
       <arg value="build-android.sh"/>
     </exec>
