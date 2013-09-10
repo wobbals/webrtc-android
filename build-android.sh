@@ -1,22 +1,33 @@
 #!/bin/sh -xe
 export PATH=$PATH:`pwd`/depot_tools
 
+BASE_PATH=$(pwd)
+
 BRANCH=trunk
 gclient sync --nohooks
 
 cd $BRANCH
-. ./build/android/envsetup.sh
-gclient runhooks
-#ninja -C out/Debug -t targets
-ninja -C out/Debug WebRTCDemo
-
-LIBS=`find out/Debug -name '*.a' -maxdepth 3`
-
+ARCHS="x86 arm"
 LIBS_DEST=out/android/libs
+
 mkdir -p $LIBS_DEST
-while read -r lib; do
-    cp $lib $LIBS_DEST
-done <<< "$LIBS"
+
+for ARCH in $ARCHS; do
+	rm -rf out/Release
+	. ./build/android/envsetup.sh  --target-arch=$ARCH
+
+	GYP_DEFINES="build_with_libjingle=1 build_with_chromium=0 libjingle_java=1 $GYP_DEFINES" gclient runhooks
+	ninja -C out/Release all
+
+	AR=${BASE_PATH}/$BRANCH/`./third_party/android_tools/ndk/ndk-which ar`
+	cd $LIBS_DEST
+	for a in `ls $BASE_PATH/$BRANCH/out/Release/*.a` ; do 
+		$AR -x $a
+	done
+	$AR -q libwebrtc_$ARCH.a *.o
+	rm -f *.o
+	cd $BASE_PATH/$BRANCH
+done
 
 HEADERS=`find webrtc third_party -name *.h | grep -v android_tools`
 HEADERS_DEST=out/android/include
