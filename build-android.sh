@@ -1,4 +1,4 @@
-nin#!/bin/sh -x
+#!/bin/sh -x
 set -e
 
 BASE_PATH=$(pwd)
