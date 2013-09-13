@@ -1,9 +1,10 @@
 #!/bin/sh -xe
-export PATH=$PATH:`pwd`/depot_tools
 
 BASE_PATH=$(pwd)
 
 BRANCH=trunk
+gclient config https://webrtc.googlecode.com/svn/trunk
+echo "target_os = ['android', 'unix']" >> .gclient
 gclient sync --nohooks
 
 cd $BRANCH
