@@ -1,4 +1,4 @@
-#!/bin/sh -x
+nin#!/bin/sh -x
 set -e
 
 BASE_PATH=$(pwd)
@@ -18,7 +18,7 @@ for ARCH in $ARCHS; do
 	. ./build/android/envsetup.sh  --target-arch=$ARCH
 
 	GYP_DEFINES="build_with_libjingle=1 build_with_chromium=0 libjingle_java=1 $GYP_DEFINES" gclient runhooks
-	ninja -C out/Release -t clean
+	ninja -C out/Release -t clean || ls out/Release
 	ninja -j 20 -C out/Release all
 
 	AR=${BASE_PATH}/$BRANCH/`./third_party/android_tools/ndk/ndk-which ar`
