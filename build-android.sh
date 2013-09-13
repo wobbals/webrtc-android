@@ -1,7 +1,7 @@
-#!/bin/sh -xe
+#!/bin/sh -x
+set -e
 
 BASE_PATH=$(pwd)
-
 BRANCH=trunk
 gclient config https://webrtc.googlecode.com/svn/trunk
 echo "target_os = ['android', 'unix']" >> .gclient
