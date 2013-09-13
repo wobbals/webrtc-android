@@ -38,3 +38,7 @@ while read -r header; do
 done <<< "$HEADERS"
 
 tar cjf android-webrtc.tar.bz2 out/android
+
+cd $BASE_PATH
+REVISION=`svn info $BRANCH | grep Revision | cut -f2 -d: | tr -d ' '`
+echo "WEBRTC_REVISION=$REVISION" > build.properties
