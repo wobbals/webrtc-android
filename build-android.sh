@@ -10,7 +10,7 @@ gclient sync --nohooks
 cd $BRANCH
 ARCHS="x86 arm"
 LIBS_DEST=out/android/libs
-
+rm -rf $LIBS_DEST || echo "Clean $LIBS_DEST"
 mkdir -p $LIBS_DEST
 
 for ARCH in $ARCHS; do
