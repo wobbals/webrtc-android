@@ -11,7 +11,7 @@ cd $BRANCH
 ARCHS="x86 arm"
 DEST_DIR=out/android
 LIBS_DEST=$DEST_DIR/libs
-rm -rf $LIBS_DEST
+rm -rf $LIBS_DEST || echo "Clean $LIBS_DEST"
 mkdir -p $LIBS_DEST
 
 for ARCH in $ARCHS; do
