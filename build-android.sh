@@ -8,7 +8,7 @@ echo "target_os = ['android', 'unix']" >> .gclient
 gclient sync --nohooks
 
 cd $BRANCH
-ARCHS="x86 arm"
+ARCHS="arm"
 DEST_DIR=out/android
 LIBS_DEST=$DEST_DIR/libs
 rm -rf $LIBS_DEST || echo "Clean $LIBS_DEST"
