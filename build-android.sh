@@ -9,29 +9,38 @@ gclient sync --nohooks
 
 cd $BRANCH
 ARCHS="arm"
+BUILD_MODE=Release
 DEST_DIR=out/android
 LIBS_DEST=$DEST_DIR/libs
 rm -rf $LIBS_DEST || echo "Clean $LIBS_DEST"
 mkdir -p $LIBS_DEST
 
 for ARCH in $ARCHS; do
-	rm -rf out/Release
+    (
+	rm -rf out/$BUILD_MODE
 	source build/android/envsetup.sh --target-arch=$ARCH
 
-	GYP_DEFINES="build_with_libjingle=1 build_with_chromium=0 enable_android_opensl=0 enable_tracing=1 include_tests=0 $GYP_DEFINES" gclient runhooks
-	ninja -C out/Release all
-
+	export GYP_DEFINES="build_with_libjingle=1 \
+                            build_with_chromium=0 \
+                            enable_android_opensl=0 \
+                            enable_tracing=1 \
+                            include_tests=0 \
+                            $GYP_DEFINES"
+	gclient runhooks --force
+	ninja -C out/$BUILD_MODE all
+	
 	AR=${BASE_PATH}/$BRANCH/`./third_party/android_tools/ndk/ndk-which ar`
 	cd $LIBS_DEST
-	for a in `ls $BASE_PATH/$BRANCH/out/Release/*.a` ; do 
-		$AR -x $a
+	for a in `ls $BASE_PATH/$BRANCH/out/$BUILD_MODE/*.a` ; do 
+	    $AR -x $a
 	done
 	$AR -q libwebrtc_$ARCH.a *.o
 	rm -f *.o
 	cd $BASE_PATH/$BRANCH
+    )
 done
 
-cp $BASE_PATH/$BRANCH/out/Release/*.jar $LIBS_DEST
+cp $BASE_PATH/$BRANCH/out/$BUILD_MODE/*.jar $LIBS_DEST
 
 HEADERS=`find webrtc third_party talk -name *.h | grep -v android_tools`
 HEADERS_DEST=$DEST_DIR/include
