@@ -22,7 +22,6 @@ for ARCH in $ARCHS; do
 
 	export GYP_DEFINES="build_with_libjingle=1 \
                             build_with_chromium=0 \
-                            enable_android_opensl=0 \
                             enable_tracing=1 \
                             include_tests=0 \
                             $GYP_DEFINES"
