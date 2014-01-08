@@ -34,6 +34,9 @@ for ARCH in $ARCHS; do
 	for a in `ls $BASE_PATH/$BRANCH/out/$BUILD_MODE/*.a` ; do 
 	    $AR -x $a
 	done
+	for a in `ls *.o | grep gtest` ; do 
+	    rm $a
+	done
 	$AR -q libwebrtc_$ARCH.a *.o
 	rm -f *.o
 	cd $BASE_PATH/$BRANCH
