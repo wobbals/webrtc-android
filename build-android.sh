@@ -22,7 +22,6 @@ for ARCH in $ARCHS; do
 
 	export GYP_DEFINES="build_with_libjingle=1 \
                             build_with_chromium=0 \
-                            enable_android_opensl=0 \
                             enable_tracing=1 \
                             include_tests=0 \
                             $GYP_DEFINES"
@@ -33,6 +32,9 @@ for ARCH in $ARCHS; do
 	cd $LIBS_DEST
 	for a in `ls $BASE_PATH/$BRANCH/out/$BUILD_MODE/*.a` ; do 
 	    $AR -x $a
+	done
+	for a in `ls *.o | grep gtest` ; do 
+	    rm $a
 	done
 	$AR -q libwebrtc_$ARCH.a *.o
 	rm -f *.o
